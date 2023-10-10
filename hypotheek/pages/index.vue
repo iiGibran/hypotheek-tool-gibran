@@ -18,7 +18,7 @@
     </form>
     <div v-if="mortgageResult" class="mt-4">
       <h2 class="text-xl font-semibold">Mortgage Result</h2>
-      <p class="text-gray-800">Your monthly payment: ${{ mortgageResult }}</p>
+      <p class="text-gray-800">Your monthly payment: €{{ mortgageResult }}</p>
     </div>
   </div>
 </template>

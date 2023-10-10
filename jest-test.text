@@ -1,0 +1,31 @@
+import { mount } from "@vue/test-utils";
+import MortgageCalculator from "@/pages/index.vue"; // Adjust the path as needed
+
+describe("MortgageCalculator.vue", () => {
+  it("renders the component", () => {
+    const wrapper = mount(MortgageCalculator);
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it("calculates mortgage payment correctly", async () => {
+    const wrapper = mount(MortgageCalculator);
+
+    // Set input values
+    await wrapper.setData({
+      loanAmount: 250000,
+      interestRate: 3.5,
+      loanTerm: 30
+    });
+
+    // Trigger the form submission
+    await wrapper.find("form").trigger("submit.prevent");
+
+    // Wait for Vue to update the DOM
+    await wrapper.vm.$nextTick();
+
+    // Check if the mortgage result is correctly calculated
+    expect(wrapper.find(".text-gray-800").text()).toContain("Your monthly payment:");
+  });
+
+  // Add more test cases as needed
+});

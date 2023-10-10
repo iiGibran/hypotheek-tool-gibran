@@ -1,0 +1,38 @@
+import { shallowMount } from "@vue/test-utils";
+import MortgageCalculator from "@/pages/index.vue";
+
+describe("MortgageCalculator.vue", () => {
+  it("calculates mortgage payment correctly", () => {
+    const wrapper = shallowMount(MortgageCalculator);
+    
+    // Set values for loanAmount, interestRate, and loanTerm
+    wrapper.setData({
+      loanAmount: 250000,
+      interestRate: 3.5,
+      loanTerm: 30,
+    });
+
+    // Call the calculateMortgage method
+    wrapper.vm.calculateMortgage();
+
+    // Access the mortgageResult property and assert its value
+    expect(wrapper.vm.mortgageResult).toEqual("1122.61"); // Adjust to match your expected result
+  });
+
+  it("handles invalid input gracefully", () => {
+    const wrapper = shallowMount(MortgageCalculator);
+    
+    // Set invalid values for loanAmount, interestRate, and loanTerm
+    wrapper.setData({
+      loanAmount: "invalid",
+      interestRate: "invalid",
+      loanTerm: "invalid",
+    });
+
+    // Call the calculateMortgage method
+    wrapper.vm.calculateMortgage();
+
+    // Access the mortgageResult property and assert its value
+    expect(wrapper.vm.mortgageResult).toBeNull();
+  });
+});

@@ -1,6 +1,14 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+  css: ['~/assets/css/main.css'],
+
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -31,8 +39,8 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-  ],
+  buildModules: ['@nuxtjs/tailwindcss'],
+
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
