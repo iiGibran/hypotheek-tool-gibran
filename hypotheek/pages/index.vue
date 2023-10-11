@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-2xl font-semibold mb-4 text-blue-950 bg-red-700 p-5">Mortgage Calculator</h1>
+    <h1 class="text-2xl font-semibold mb-4 text-blue-950 bg-blue-500 p-5">Mortgage Calculator</h1>
     <form @submit.prevent="calculateMortgage">
       <div class="mb-4">
         <label for="loanAmount" class="block text-sm font-medium text-gray-700">Loan Amount</label>
