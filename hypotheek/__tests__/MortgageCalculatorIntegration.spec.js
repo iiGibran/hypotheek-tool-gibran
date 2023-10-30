@@ -1,26 +1,29 @@
-import { mount } from "@vue/test-utils";
-import MortgageCalculator from "@/pages/index.vue"; // Adjust the import path
+import { createLocalVue, mount } from '@vue/test-utils';
+import MortgageCalculator from '@/pages/index.vue';
 
-describe("MortgageCalculator Integration Test", () => {
-  it("calculates mortgage payment when the user submits the form", async () => {
-    const wrapper = mount(MortgageCalculator);
+describe('MortgageCalculator Integration Test', () => {
+  it('calculates the mortgage correctly', () => {
+    const localVue = createLocalVue();
+    const wrapper = mount(MortgageCalculator, { localVue });
 
-    // Find the input fields and set values
-    const loanAmountInput = wrapper.find("#loanAmount");
-    const interestRateInput = wrapper.find("#interestRate");
-    const loanTermInput = wrapper.find("#loanTerm");
+    wrapper.setData({
+      income: 5000,
+      partnerIncome: 3000,
+      studyDebt: 10000,
+      postcode: '6822',
+      mortgageTerm: 10,
+    });
 
-    await loanAmountInput.setValue("250000");
-    await interestRateInput.setValue("3.5");
-    await loanTermInput.setValue("30");
+    wrapper.vm.calculateMortgage();
 
-    // Trigger the form submission
-    await wrapper.find("form").trigger("submit.prevent");
+    // this should be the expected values
+    const expectedMaxMortgageAmount = 31500;
+    const expectedMonthlyPayment = 311.49;
+    const expectedTotalPayment = 37378.86;
 
-    await wrapper.vm.$nextTick();
-
-    // the mortgage result is displayed
-    const mortgageResult = wrapper.find(".text-gray-800").text();
-    expect(mortgageResult).toContain("Your monthly payment:");
+    // check if the results match the expected values
+    expect(Math.round(wrapper.vm.maxMortgageAmount * 100) / 100).toBe(expectedMaxMortgageAmount);
+    expect(Math.round(wrapper.vm.monthlyPayment * 100) / 100).toBe(expectedMonthlyPayment);
+    expect(Math.round(wrapper.vm.totalPayment * 100) / 100).toBe(expectedTotalPayment);
   });
 });
